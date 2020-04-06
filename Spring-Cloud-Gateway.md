@@ -326,24 +326,22 @@
     ```yaml
   spring:
       cloud:
-      gateway:
+        gateway:
           routes:
+          - id: rewritepath_route
+            uri: https://example.org
+            predicates:
+            - Path=/foo/**
+            filters:
+            - RewritePath=/red(?<segment>/?.*), $\{segment}
     ```
-  ### product route
-            - id: product_route
-            uri: lb://shadow-product
-              predicates:
-              - Path=/api/product/**
-              filters:
-              - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 路径重写
-  ```
-  
-    > 将请求路径xxx/api/z/x/c 重写为 xxx/z/x/c
-  
+    
+    > 对于/red/blue的请求路径，这将在发出下游请求之前将路径设置为/blue。注意，由于YAML规范的原因，应该将$替换为$\
+    
   - ###### AddRequestHeader
   
     ```yaml
-    spring:
+  spring:
       cloud:
         gateway:
           routes:
@@ -352,9 +350,8 @@
             filters:
             - AddRequestHeader=X-Request-red, blue
     ```
-  
+    
     > 在请求发送到下游前增加请求头 X-Request-red ，值为 blue
-  
   - ###### RemoveRequestHeader
   
     ```yaml
@@ -444,7 +441,6 @@
     ```
   
     > 这将为所有匹配请求的路径加上前缀/mypath。因此，对/hello的请求将被发送到/mypath/hello。
-  
   
   
   
