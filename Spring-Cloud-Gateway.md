@@ -61,7 +61,7 @@
 
 #### 二、注册中心与配置中心设置
 
-- 注册中心配置 application.properties
+- ###### 注册中心配置 application.properties
 
   ```properties
   # 注册中心地址
@@ -74,7 +74,7 @@
 
   
 
-- 配置中心配置 bootstrap.properties
+- ###### 配置中心配置 bootstrap.properties
 
   ```properties
   # 应用名称[微服务必须]
@@ -83,6 +83,14 @@
   spring.cloud.nacos.config.server-addr=localhost:8848
   # 配置中心命名空间[环境区分]
   spring.cloud.nacos.config.namespace=2db42c13-8aaf-431a-9e33-fa123605a8b5
+  ```
+
+  
+  
+- ###### 如果引入了网关依赖却不想使用
+
+  ```properties
+  spring.cloud.gateway.enabled=false
   ```
 
   
@@ -239,7 +247,7 @@
             uri: https://example.org
             predicates:
             - Host=**.somehost.org,**.anotherhost.org
-    ```
+  ```
   
     > 请求Host 必须满足指定子串返回true
   
@@ -256,7 +264,7 @@
             uri: https://example.org
             predicates:
             - Method=GET,POST
-    ```
+  ```
   
     > 请求方式必须是指定的GET，POST返回true
   
@@ -273,7 +281,7 @@
             uri: https://example.org
             predicates:
             - Path=/red/{segment},/blue/{segment}
-    ```
+  ```
   
   > 如果请求路径为，例如:/red/1或/red/blue或/blue/green，则此路由匹配
   
@@ -374,7 +382,6 @@
     ```
     
     > 在请求发送到下游前增加请求头 X-Request-red ，值为 blue
-    
     
   - ###### RemoveRequestHeader
   
